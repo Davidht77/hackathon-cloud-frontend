@@ -12,10 +12,10 @@ export function AuthProvider({ children }) {
     if (saved) setToken(saved);
   }, []);
 
-  /* helpers */
   const login = newToken => {
-    localStorage.setItem('token', newToken);
     setToken(newToken);
+    localStorage.setItem('token', newToken);
+    
   };
 
   const logout = () => {
@@ -23,9 +23,11 @@ export function AuthProvider({ children }) {
     setToken(null);
   };
 
+
   return (
     <AuthCtx.Provider value={{ token, login, logout }}>
       {children}
     </AuthCtx.Provider>
   );
 }
+
