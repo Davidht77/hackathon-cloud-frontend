@@ -1,0 +1,103 @@
+/* Colores base */
+:root {
+  --bg-main:   #fbfbf6;
+  --card-bg:   #f8f8f8;
+  --text-main: #0f0f0f;
+  --accent:    #00d0ff;
+}
+
+/* Layout principal */
+html, body, .login-page {
+  height: 100%;
+  margin: 0;
+}
+
+.login-page {
+  display: flex;
+  min-height: 100vh;
+  background: var(--bg-main);
+  width: 100vw;
+}
+
+/* Tarjeta de login */
+.login-card {
+  flex: 0 0 380px;               /* ancho fijo */
+  background: var(--card-bg);
+  border-radius: 12px;
+  padding: 2.5rem 3rem;
+  margin: 40px;
+  margin-top: 200px;
+  box-shadow: 0 8px 24px rgba(0,0,0,.05);
+  font-family: "Inter", sans-serif;
+}
+
+/* Contenedor de la imagen/logo */
+.login-image {
+  flex: 1 1 auto;                /* llena todo el espacio restante */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+}
+
+.login-image img {
+  width: 60%;                   /* ocupa todo el ancho disponible */
+  height: auto;
+  object-fit: contain;
+  border-radius: 12px;
+}
+
+/* Cabecera */
+.header { margin-bottom: 2rem; color: var(--text-main); }
+
+
+/* Inputs */
+.input-label { display: block; font-weight: 600; margin-bottom: .25rem; }
+.input-wrapper { position: relative; margin-bottom: 1.5rem; }
+.input-wrapper input {
+  width: 100%;
+  padding: .75rem 2.75rem .75rem 1rem;
+  font-size: 1rem;
+  background: #eeeeee;
+  border: none; border-radius: 8px;
+  color: black;
+}
+.input-wrapper input:focus {
+  outline: 2px solid var(--accent);
+  background: #fff;
+}
+.input-icon {
+  position: absolute; right: 1rem; top: 50%;
+  transform: translateY(-50%);
+  width: 18px; height: 18px; stroke: #888;
+}
+
+/* Botón */
+.btn-primary {
+  display: block; width: 120px;
+  padding: .6rem 1.5rem;
+  background: var(--text-main); color: #fff;
+  border: none; border-radius: 8px;
+  font-weight: 600; cursor: pointer;
+  transition: background .16s;
+}
+.btn-primary:hover { background: #1a1a1a; }
+
+/* Enlace registro */
+.secondary-link {
+  display: block;
+  margin-top: 2rem;
+  color: var(--accent);
+  text-align: center;
+  font-size: .9rem;
+  cursor: pointer;
+}
+.secondary-link:hover { text-decoration: underline; }
+
+/* Responsive móvil */
+@media (max-width: 700px) {
+  .login-page   { flex-direction: column; }
+  .login-card   { margin: 24px; }
+  .login-image  { padding: 24px; }
+  .login-image img { max-height: 240px; }
+}

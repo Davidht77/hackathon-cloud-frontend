@@ -1,0 +1,29 @@
+/* —— Ajustes específicos de la tarjeta Register —— */
+
+/* Hereda la mayor parte de Login.css */
+.register-card {
+  flex: 0 0 380px;          /* ligeramente más ancho que la de login */
+  background: var(--card-bg);
+  border-radius: 12px;
+  padding: 2.5rem 3rem;
+  margin: 40px;
+  box-shadow: 0 8px 24px rgba(0,0,0,.05);
+  font-family: "Inter", sans-serif;
+  margin-top: 210px;
+}
+
+.header-title {
+  font-size: 2.6rem;
+  margin: 0 0 .5rem 0;
+  color: var(--text-main);
+}
+
+.subtitle {
+  margin: 0 0 2rem 0;
+  color: #4b4b4b;
+}
+
+/* Mobile: se apila como en Login.css */
+@media (max-width: 700px) {
+  .register-card { margin: 24px; }
+}

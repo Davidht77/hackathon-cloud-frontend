@@ -4,6 +4,7 @@ import FileUploader from '../components/FileUploader'
 import DiagramTypeSelector from '../components/DiagramTypeSelector'
 import DiagramViewer from '../components/DiagramViewer'
 import { fetchFromGitHub } from '../utils/githubFetch'
+import { useAuth } from '../contexts/AuthContext'
 
 export default function Workspace(){
   const [code, setCode]     = useState('// escribe tu diagrama aquí')
@@ -11,6 +12,7 @@ export default function Workspace(){
   const [url, setUrl]       = useState('')
   const [loading, setLoading] = useState(false)
   const [gitUrl, setGitUrl] = useState('')
+  const { token, logout } = useAuth();
 
   const generate = async () => {
     if(!code.trim()) return alert('Agrega código primero')
@@ -53,8 +55,13 @@ export default function Workspace(){
           className="btn btn-outline-danger"
           onClick={()=>{
             localStorage.removeItem('token')
+            logout();
             window.location='/login'
-          }}
+            
+           }
+          }
+
+           
         >Cerrar sesión</button>
       </div>
 
