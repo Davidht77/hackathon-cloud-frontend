@@ -20,8 +20,9 @@
 
 
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
-import Login from './pages/Login'
+import Login from './pages/Login/Login'
 import Workspace from './pages/Workspace'
+import Register from './pages/Register/Register'
 
 export default function App() {
   return (
@@ -29,6 +30,8 @@ export default function App() {
       <Routes>
         {/* Ruta de login (opcional) */}
         <Route path="/login" element={<Login />} />
+
+        <Route path="/register" element={<Register />} />
 
         {/* Workspace siempre accesible */}
         <Route path="/app" element={<Workspace />} />
