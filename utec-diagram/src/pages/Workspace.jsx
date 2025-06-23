@@ -170,7 +170,7 @@ export default function Workspace() {
           </button>
         </div>
 
-        <div >
+        <div style={{height: "100%"}} >
           {url && <DiagramViewer url={url} />}
         </div>
       </div>

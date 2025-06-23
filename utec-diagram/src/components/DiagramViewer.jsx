@@ -79,10 +79,14 @@ export default function DiagramViewer({ url }) {
   }
 
   return (
-    <div className="border p-3">
-      <div style={{ textAlign: 'center' }}>
+    <div className="border p-3" style={{height: "100%"}}>
+
+      <div style={{ textAlign: 'center', height: "92%" }}>
         <h5>Diagram:</h5>
-        <img src={url} alt="diagram" className="img-fluid border" />
+        <div style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
+          <img src={url} alt="diagram" className="img-fluid border" />
+        </div>
+        
       </div>
 
       <div className="mt-3 d-flex gap-2">
