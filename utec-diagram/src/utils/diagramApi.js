@@ -37,3 +37,20 @@ export async function generateER(code, token) {
   const { diagram_url } = await res.json()
   return diagram_url
 }
+
+export async function generateJSON(codeObj, token) {
+  const res = await fetch(`${API_BASE}/json`, {
+    method: 'POST',
+    headers: {
+      'Content-Type':  'application/json',
+      'Authorization': token
+    },
+    body: JSON.stringify({ code: codeObj })
+  })
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}))
+    throw new Error(err.error || `Error ${res.status}`)
+  }
+  const { diagram_url } = await res.json()
+  return diagram_url
+}

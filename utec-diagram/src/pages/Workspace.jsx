@@ -5,7 +5,7 @@ import DiagramTypeSelector from '../components/DiagramTypeSelector'
 import DiagramViewer from '../components/DiagramViewer'
 import { fetchFromGitHub } from '../utils/githubFetch'
 import { useAuth } from '../contexts/AuthContext'
-import { generateAwsDiagram, generateER } from '../utils/diagramApi'
+import { generateAwsDiagram, generateER, generateJSON } from '../utils/diagramApi'
 
 const DEFAULT_CODE = `// AWS example 
 Diagrama 'InfraestructuraCompleta'
@@ -63,7 +63,7 @@ export default function Workspace() {
   const [url, setUrl] = useState('')
   const [loading, setLoading] = useState(false)
   const [gitUrl, setGitUrl] = useState('')
-  const { token, logout } = useAuth();
+  const { logout } = useAuth();
 
   const generate = async () => {
     if (!code.trim()) return alert('Agrega código primero')
@@ -78,12 +78,19 @@ export default function Workspace() {
       else if (type === 'er') {
         diagramUrl = await generateER(code, token)
       }
-      // else if (type === 'json') { ... }
-
+      else if (type === 'json') {
+        let parsed
+        try {
+          parsed = JSON.parse(code)
+        } catch {
+          throw new Error('Tu código JSON no es válido')
+        }
+        diagramUrl = await generateJSON(parsed, token)
+      }
       setUrl(diagramUrl)
     } catch (e) {
       console.error(e)
-      alert(e.message || 'Error generando diagrama')
+      alert(e.message || 'Diagram generating error')
     } finally {
       setLoading(false)
     }
@@ -95,7 +102,7 @@ export default function Workspace() {
       const txt = await fetchFromGitHub(gitUrl)
       setCode(txt)
     } catch {
-      alert('No pude cargar de GitHub')
+      alert("I couldn't upload from GitHub")
     }
   }
 
@@ -104,14 +111,14 @@ export default function Workspace() {
   }, [code])
 
   return (
-    <div style={{ height: "100vh", width: "100%", display: "grid", gridTemplateRows: "70px auto"}}>
-      
-      <div style={{display: "flex", justifyContent: "space-between", margin: "auto 20px"}}>
-        <h1 style={{fontSize: "28px", marginTop: "14px", color: "#0f0f0f"}}>Diagram with code</h1>
+    <div style={{ height: "100vh", width: "100%", display: "grid", gridTemplateRows: "70px auto" }}>
+
+      <div style={{ display: "flex", justifyContent: "space-between", margin: "auto 20px" }}>
+        <h1 style={{ fontSize: "28px", marginTop: "14px", color: "#0f0f0f" }}>Diagram with code</h1>
 
         <button
           className="btn btn-outline-danger"
-          style={{width: "120px", height: "40px", marginTop: "20px"}}
+          style={{ width: "120px", height: "40px", marginTop: "20px" }}
           onClick={() => {
             localStorage.removeItem('token')
             localStorage.removeItem('diagramCode')
@@ -121,9 +128,9 @@ export default function Workspace() {
           }
 
         >Log out</button>
-        
+
       </div>
-      <div style={{display: 'grid', gridTemplateColumns: "1fr 1fr", alignItems: "center", justifyContent: "center", gap: "20px", padding: "40px", backgroundColor: "#fbfbf6 "}}>
+      <div style={{ display: 'grid', gridTemplateColumns: "1fr 1fr", alignItems: "center", justifyContent: "center", gap: "20px", padding: "40px", backgroundColor: "#fbfbf6 " }}>
         <div>
 
           <DiagramTypeSelector type={type} setType={setType} />
