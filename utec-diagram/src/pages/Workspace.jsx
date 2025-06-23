@@ -7,7 +7,51 @@ import { fetchFromGitHub } from '../utils/githubFetch'
 import { useAuth } from '../contexts/AuthContext'
 import { generateAwsDiagram, generateER } from '../utils/diagramApi'
 
-const DEFAULT_CODE = `// write your diagram here`
+const DEFAULT_CODE = `// AWS example 
+Diagrama 'InfraestructuraCompleta'
+VPC "VPC-Produccion"
+Subnet "Publica-1" conectado a VPC "VPC-Produccion"
+Subnet "Publica-2" conectado a VPC "VPC-Produccion"
+Subnet "Privada-1" conectado a VPC "VPC-Produccion"
+Subnet "Privada-2" conectado a VPC "VPC-Produccion"
+
+IGW "InternetGateway" conectado a VPC "VPC-Produccion"
+RouteTable "RT-Publica" conectado a Subnet "Publica-1"
+RouteTable "RT-Publica" conectado a Subnet "Publica-2"
+RouteTable "RT-Privada" conectado a Subnet "Privada-1"
+RouteTable "RT-Privada" conectado a Subnet "Privada-2"
+
+EC2 "WebServer-1" conectado a Subnet "Publica-1"
+EC2 "WebServer-2" conectado a Subnet "Publica-2"
+
+ALB "LoadBalancer" conectado a Subnet "Publica-1"
+ALB "LoadBalancer" conectado a Subnet "Publica-2"
+ALB "LoadBalancer" conectado a EC2 "WebServer-1"
+ALB "LoadBalancer" conectado a EC2 "WebServer-2"
+
+NAT "NAT-Gateway" conectado a Subnet "Publica-1"
+NAT "NAT-Gateway" conectado a RouteTable "RT-Privada"
+
+ECSCluster "ECS-Cluster" conectado a Subnet "Privada-1"
+ECSService "API-Service" conectado a ECSCluster "ECS-Cluster"
+API "API-Gateway" conectado a ECSService "API-Service"
+
+RDS "PostgresDB" conectado a Subnet "Privada-2"
+ElastiCache "RedisCache" conectado a Subnet "Privada-2"
+
+S3 "StaticAssets" conectado a CloudFront "CDN"
+CloudFront "CDN" conectado a Route53 "DNS"
+ACM "CertificadoTLS" conectado a CloudFront "CDN"
+Route53 "DNS" conectado a ALB "LoadBalancer"
+
+Lambda "ThumbnailGen" conectado a S3 "StaticAssets"
+SNS "Notificaciones" conectado a Lambda "ThumbnailGen"
+SQS "ColaTrabajo" conectado a Lambda "ThumbnailGen"
+
+User "VisitanteWeb" conectado a ALB "LoadBalancer"
+Admin "Administrador" conectado a EC2 "WebServer-1"
+
+`
 
 export default function Workspace() {
 
@@ -73,10 +117,8 @@ export default function Workspace() {
             localStorage.removeItem('diagramCode')
             logout();
             window.location = '/login'
-
           }
           }
-
 
         >Log out</button>
         
